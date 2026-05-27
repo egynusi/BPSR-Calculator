@@ -471,11 +471,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const refineAtkVal = parseFloat(statRefineAtk.value) || 0;
         const atkAddVal = parseFloat(statAtkAdd.value) || 0;
-        const atkPctVal = parseFloat(statAtkPct.value) || 0;
-        const totalBaseAtk = Math.round(atk * (1 + atkPctVal / 100) + atkAddVal);
+        const atkPctVal = parseFloat(statAtkPct.value) || 100; // 基礎ダメ倍率% (default to 100)
+        const totalBaseAtk = Math.round(atk + atkAddVal);
         const combinedAtk = totalBaseAtk + refineAtkVal;
         const atkFactor = combinedAtk / 3510;
-        const baseScore = 10000 * atkFactor;
+        const baseScore = 10000 * (atkPctVal / 100) * atkFactor;
 
         // 2. Adjusting base percentages based on extra raw
         const basePcts = {
@@ -562,17 +562,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const refineAtkVal = parseFloat(statRefineAtk.value) || 0;
         const atkAddVal = parseFloat(statAtkAdd.value) || 0;
-        const atkPctVal = parseFloat(statAtkPct.value) || 0;
+        const atkPctVal = parseFloat(statAtkPct.value) || 100; // 基礎ダメ倍率% (default to 100)
 
         // 2. Base score scaling coefficient
-        const totalBaseAtk = Math.round(atk * (1 + atkPctVal / 100) + atkAddVal);
+        const totalBaseAtk = Math.round(atk + atkAddVal);
         if (statAtkTotalDisplay) {
             statAtkTotalDisplay.textContent = totalBaseAtk.toLocaleString();
         }
 
         const combinedAtk = totalBaseAtk + refineAtkVal;
         const atkFactor = combinedAtk / 3510;
-        const baseScore = 10000 * atkFactor;
+        const baseScore = 10000 * (atkPctVal / 100) * atkFactor;
 
         // 3. Multipliers
         const universalMult = 1 + (state.universal.pct / 100) * 0.35;
@@ -1151,7 +1151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     statAttackPower.value = 3000; // Default to 3000
     statRefineAtk.value = 800; // Default to 800
     statAtkAdd.value = 0;
-    statAtkPct.value = 0;
+    statAtkPct.value = 100;
     statEliteDmg.value = 0;
     statBossDmg.value = 0;
     

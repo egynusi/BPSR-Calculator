@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スタレゾ ダメージ & ステータス シミュレーター</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="container">
+
+        <main class="calculator-grid-three-col" style="margin-bottom: 0;">
+            
+            <section class="grid-col">
+                <div class="card glass-card border-accent-gold" style="padding: 16px;">
+                    <div class="card-header" style="margin-bottom: 8px; justify-content: space-between; align-items: center; width: 100%;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="icon">⚔️</span>
+                            <h2>攻撃力・バフ設定</h2>
+                        </div>
+                        <div class="header-defense-display" style="font-size: 11px; color: var(--text-muted); background: rgba(0,0,0,0.25); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color); font-weight: 500;">
+                            敵基本防御: <span style="font-family: monospace; font-weight: 700; color: var(--accent-cyan);">3510</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bidirectional-group" style="gap: 12px; margin-top: 8px;">
+                        
+                        <div class="stat-row" id="row-base-atk" data-stat="dream-strength" style="padding-bottom: 12px;">
+                            <div class="stat-label-col" style="margin-bottom: 8px;">
+                                <span class="stat-title">攻撃力</span>
+
+                            </div>
+                            
+                            <div class="stat-inputs" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                                <div class="input-wrapper">
+                                    <input type="number" id="stat-attack-power" class="bi-input" value="3000">
+                                    <span class="unit">物理/魔法</span>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input type="number" id="stat-refine-atk" class="bi-input" value="800">
+                                    <span class="unit" style="font-size: 9px; right: 8px;">精錬</span>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input type="number" id="stat-atk-add" class="bi-input" value="0" placeholder="0">
+                                    <span class="unit">加算</span>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input type="number" id="stat-atk-pct" class="bi-input" value="0" placeholder="0.0">
+                                    <span class="unit">ダメージアップ%</span>
+                                </div>
+                            </div>
+                            
+                            <div style="border-top: 1px dashed rgba(255,255,255,0.12); padding-top: 8px; display: flex; justify-content: space-between; align-items: center; height: 26px;">
+                                <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">合計攻撃力</span>
+                                <span id="stat-atk-total-display" style="font-size: 15px; font-weight: 700; color: var(--accent-gold); font-family: monospace;">3,000</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-row" data-stat="dream-strength">
+                            <div class="stat-label-col">
+                                <span class="stat-title">特攻ダメージ</span>
+                                <span class="stat-subtitle">精鋭ダメージ% / 対ボスダメージ%</span>
+                            </div>
+                            <div class="stat-inputs" style="gap: 8px;">
+                                <div class="input-wrapper">
+                                    <input type="number" id="stat-elite-dmg" class="bi-input" value="0" placeholder="0.0">
+                                    <span class="unit">精鋭%</span>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input type="number" id="stat-boss-dmg" class="bi-input" value="0" placeholder="0.0">
+                                    <span class="unit">ボス%</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="stat-row" data-stat="dream-strength">
+                            <div class="stat-label-col">
+                                <span class="stat-title" style="color: var(--accent-purple);">バフ設定</span>
+                                <span class="stat-subtitle">鼓舞 I / II / HP変動バフ</span>
+                            </div>
+                            <div class="stat-inputs" style="grid-template-columns: 1fr; justify-items: end; align-items: center; height: 38px;">
+                                <div class="checkbox-group-inline" style="gap: 12px; display: flex;">
+                                    <div class="checkbox-wrapper">
+                                        <input type="checkbox" id="inspiring-1-5" value="1.5">
+                                        <label for="inspiring-1-5" style="font-size: 11px;">1.5%</label>
+                                    </div>
+                                    <div class="checkbox-wrapper">
+                                        <input type="checkbox" id="inspiring-3-0" value="3.0">
+                                        <label for="inspiring-3-0" style="font-size: 11px;">3.0%</label>
+                                    </div>
+                                    <div class="checkbox-wrapper">
+                                        <input type="checkbox" id="hp-fluctuation" value="10.0">
+                                        <label for="hp-fluctuation" style="font-size: 11px;">HP変動</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid-col">
+                <div class="card glass-card border-accent-blue" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="card-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="icon">📊</span>
+                                <h2 style="margin: 0;">キャラクター特性</h2>
+                            </div>
+                            <select id="class-select" class="styled-select" style="font-size: 11px; padding: 4px 8px; height: 26px; width: auto; max-width: 170px; background: rgba(0,0,0,0.2);">
+                                <optgroup label="ストームブレイド">
+                                    <option value="storm_blade_reijin" selected>雷刃型</option>
+                                    <option value="storm_blade_getsugei">月影型</option>
+                                </optgroup>
+                                <optgroup label="ゲイルランサー">
+                                    <option value="gale_lancer_reppuu">烈風</option>
+                                    <option value="gale_lancer_ranpuu">乱風</option>
+                                </optgroup>
+                                <optgroup label="ディバインアーチャー">
+                                    <option value="divine_archer_ookami">狼弓</option>
+                                    <option value="divine_archer_taka">鷹弓</option>
+                                </optgroup>
+                                <optgroup label="フロストメイジ">
+                                    <option value="frost_mage_hyouga">氷牙型</option>
+                                    <option value="frost_mage_souten">霜天型</option>
+                                </optgroup>
+                                <optgroup label="ヴァーダントオラクル">
+                                    <option value="verdant_oracle_shinyu">森癒型</option>
+                                    <option value="verdant_oracle_isaki">威咲型</option>
+                                </optgroup>
+                                <optgroup label="ビートパフォーマー">
+                                    <option value="beat_performer_kyouon">狂音型</option>
+                                    <option value="beat_performer_kyousou">響奏型</option>
+                                </optgroup>
+                                <optgroup label="ヘヴィガーディアン">
+                                    <option value="heavy_guardian_goushu">剛守型</option>
+                                    <option value="heavy_guardian_goushin">剛身型</option>
+                                </optgroup>
+                                <optgroup label="シールドファイター">
+                                    <option value="shield_fighter_koutate">光盾型</option>
+                                    <option value="shield_fighter_kousai">光砕型</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div class="bidirectional-group" style="gap: 12px;">
+                            <div class="stat-row" data-stat="crit">
+                                <div class="stat-label-col">
+                                    <span class="stat-title">会心</span>
+                                </div>
+                                <div class="stat-inputs" style="gap: 6px;">
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-crit-raw" class="bi-input" value="0" placeholder="0">
+                                        <span class="unit">実数</span>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-crit-extra" class="bi-input" value="0" placeholder="0" style="padding-right: 48px;">
+                                        <span class="unit" style="font-size: 9px; right: 6px; color: var(--accent-gold);">+イマジン</span>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-crit-pct" class="bi-input" placeholder="0.0">
+                                        <span class="unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stat-row" data-stat="fast">
+                                <div class="stat-label-col">
+                                    <span class="stat-title">ファスト</span>
+                                </div>
+                                <div class="stat-inputs" style="gap: 6px;">
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-fast-raw" class="bi-input" value="0" placeholder="0">
+                                        <span class="unit">実数</span>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-fast-extra" class="bi-input" value="0" placeholder="0" style="padding-right: 48px;">
+                                        <span class="unit" style="font-size: 9px; right: 6px; color: var(--accent-blue);">+イマジン</span>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-fast-pct" class="bi-input" placeholder="0.0">
+                                        <span class="unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stat-row" data-stat="luck">
+                                <div class="stat-label-col">
+                                    <span class="stat-title">幸運</span>
+                                </div>
+                                <div class="stat-inputs" style="gap: 6px;">
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-luck-raw" class="bi-input" value="0" placeholder="0">
+                                        <span class="unit">実数</span>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-luck-extra" class="bi-input" value="0" placeholder="0" style="padding-right: 48px;">
+                                        <span class="unit" style="font-size: 9px; right: 6px; color: var(--accent-green);">+イマジン</span>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="stat-luck-pct" class="bi-input" placeholder="0.0">
+                                        <span class="unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stat-row" data-stat="dex">
+                                <div class="stat-label-col">
+                                    <span class="stat-title">器用さ</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="stat-inputs" style="gap: 6px;">
+                                        <div class="input-wrapper">
+                                            <input type="text" id="stat-dex-raw" class="bi-input" value="0" placeholder="0">
+                                            <span class="unit">実数</span>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <input type="text" id="stat-dex-extra" class="bi-input" value="0" placeholder="0" style="padding-right: 48px;">
+                                            <span class="unit" style="font-size: 9px; right: 6px; color: var(--accent-cyan);">+イマジン</span>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <input type="text" id="stat-dex-pct" class="bi-input" placeholder="0.0">
+                                            <span class="unit">%</span>
+                                        </div>
+                                    </div>
+                                    <span style="font-size: 13.5px; font-weight: 700; color: var(--accent-cyan); font-family: monospace; white-space: nowrap;">
+                                        ＝&nbsp;<span id="stat-dex-bonus-total">0.00%</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="stat-row" data-stat="universal">
+                                <div class="stat-label-col">
+                                    <span class="stat-title">万能</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="stat-inputs" style="gap: 6px;">
+                                        <div class="input-wrapper">
+                                            <input type="text" id="stat-universal-raw" class="bi-input" value="0" placeholder="0">
+                                            <span class="unit">実数</span>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <input type="text" id="stat-universal-extra" class="bi-input" value="0" placeholder="0" style="padding-right: 48px;">
+                                            <span class="unit" style="font-size: 9px; right: 6px; color: var(--accent-purple);">+イマジン</span>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <input type="text" id="stat-universal-pct" class="bi-input" placeholder="0.0">
+                                            <span class="unit">%</span>
+                                        </div>
+                                    </div>
+                                    <span style="font-size: 13.5px; font-weight: 700; color: var(--accent-purple); font-family: monospace; white-space: nowrap;">
+                                        ＝&nbsp;<span id="stat-universal-bonus-pct">0.00%</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-top" style="margin-top: 10px; padding-top: 8px; margin-bottom: 2px;">
+                            <label class="important-label" style="font-size: 13.5px; font-weight: 600; color: var(--text-muted);">追加ステータス・倍率詳細</label>
+                        </div>
+
+                        <div class="multiplier-aligned-list" style="margin-bottom: 8px;">
+                            <div class="mult-align-row">
+                                <span class="mult-align-label">会心ダメ</span>
+                                <div class="speed-formula-aligned">
+                                    <div class="input-wrapper compact-wrap" style="width: 130px !important;">
+                                        <input type="number" id="manual-crit-dmg" class="bi-input compact-bi" value="50" step="0.01" min="50" style="text-align: center;">
+                                        <span class="unit" style="right: 6px;">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mult-align-row">
+                                <span class="mult-align-label">基礎攻撃間隔</span>
+                                <div class="mult-align-control">
+                                    <div class="input-wrapper compact-wrap" style="width: 130px !important;">
+                                        <input type="number" id="base-attack-interval" class="bi-input compact-bi" value="1.0" step="0.1" style="text-align: center;">
+                                        <span class="unit" style="right: 6px;">秒</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mult-align-row">
+                                <span class="mult-align-label" id="label-atk-speed-conversion">攻撃速度</span>
+                                <div class="speed-formula-aligned">
+                                    <span class="speed-formula-part" id="converted-atk-speed">0.0%</span>
+                                    <span class="speed-formula-plus">+</span>
+                                    <span style="font-size: 10px; color: var(--text-muted); margin-left: 2px; margin-right: 2px;">装備分</span>
+                                    <div class="input-wrapper compact-wrap" style="width: 100px !important;">
+                                        <input type="number" id="gear-atk-speed" class="bi-input compact-bi" value="0" step="0.1" style="text-align: center; padding: 0 16px 0 4px;">
+                                        <span class="unit" style="right: 4px;">%</span>
+                                    </div>
+                                    <span class="speed-formula-equal">=</span>
+                                    <span class="speed-formula-total" id="total-atk-speed">0.0%</span>
+                                </div>
+                            </div>
+
+                            <div class="mult-align-row">
+                                <span class="mult-align-label" id="label-cast-speed-conversion">詠唱速度</span>
+                                <div class="speed-formula-aligned">
+                                    <span class="speed-formula-part" id="converted-cast-speed">0.0%</span>
+                                    <span class="speed-formula-plus">+</span>
+                                    <span style="font-size: 10px; color: var(--text-muted); margin-left: 2px; margin-right: 2px;">装備分</span>
+                                    <div class="input-wrapper compact-wrap" style="width: 100px !important;">
+                                        <input type="number" id="gear-cast-speed" class="bi-input compact-bi" value="0" step="0.1" style="text-align: center; padding: 0 16px 0 4px;">
+                                        <span class="unit" style="right: 4px;">%</span>
+                                    </div>
+                                    <span class="speed-formula-equal">=</span>
+                                    <span class="speed-formula-total" id="total-cast-speed">0.0%</span>
+                                </div>
+                            </div>
+
+                            <div class="mult-align-row">
+                                <span class="mult-align-label">幸運ダメ倍率</span>
+                                <div class="speed-formula-aligned">
+                                    <div id="lucky-abi-container" style="display: none; align-items: center;">
+                                        <label class="compact-checkbox" style="margin-right: 2px;">
+                                            <input type="checkbox" id="apply-lucky-abi">
+                                            <span class="custom-cb"></span>
+                                            <span style="font-size: 11px;">アビ乗算:</span>
+                                        </label>
+                                        <div class="input-wrapper compact-wrap" style="width: 90px !important; margin-right: 8px;">
+                                            <input type="number" id="manual-lucky-abi" class="bi-input compact-bi" value="1.2" step="0.1" style="text-align: center; padding: 0 4px;">
+                                        </div>
+                                    </div>
+                                    <div class="input-wrapper compact-wrap" style="width: 130px !important;">
+                                        <input type="number" id="manual-lucky-dmg" class="bi-input compact-bi" value="40" step="0.01" style="text-align: center;" readonly>
+                                        <span class="unit" style="right: 6px;">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 6px; margin-top: 4px; margin-bottom: 4px; width: 100%;">
+                                <!-- 絶対幸運 -->
+                                <div style="flex: 1; display: flex; align-items: center; background: rgba(255, 255, 255, 0.02); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); height: 28px;">
+                                    <span style="font-size: 10.5px; color: var(--text-muted); font-weight: 500; white-space: nowrap; margin-right: 6px;">絶対幸運</span>
+                                    <div class="input-wrapper compact-wrap" style="flex: 1; width: 100% !important;">
+                                        <input type="number" id="manual-absolute-luck" class="bi-input compact-bi" value="0" step="0.01" style="text-align: center; padding: 0 12px 0 2px; font-size: 11px; width: 100%;">
+                                        <span class="unit" style="right: 2px; font-size: 8px;">%</span>
+                                    </div>
+                                </div>
+                                <!-- 極幸運会心 -->
+                                <div style="flex: 1; display: flex; align-items: center; background: rgba(255, 255, 255, 0.02); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); height: 28px;">
+                                    <span style="font-size: 10.5px; color: var(--text-muted); font-weight: 500; white-space: nowrap; margin-right: 6px;">極幸運会心</span>
+                                    <div class="input-wrapper compact-wrap" style="flex: 1; width: 100% !important;">
+                                        <input type="number" id="manual-ultimate-luck-crit" class="bi-input compact-bi" value="0" step="0.01" style="text-align: center; padding: 0 12px 0 2px; font-size: 11px; width: 100%;">
+                                        <span class="unit" style="right: 2px; font-size: 8px;">%</span>
+                                    </div>
+                                </div>
+                                <!-- 集中幸運 -->
+                                <div style="flex: 1; display: flex; align-items: center; background: rgba(255, 255, 255, 0.02); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); height: 28px;">
+                                    <span style="font-size: 10.5px; color: var(--text-muted); font-weight: 500; white-space: nowrap; margin-right: 6px;">集中幸運</span>
+                                    <div class="input-wrapper compact-wrap" style="flex: 1; width: 100% !important;">
+                                        <input type="number" id="manual-focused-luck" class="bi-input compact-bi" value="0" step="0.01" style="text-align: center; padding: 0 12px 0 2px; font-size: 11px; width: 100%;">
+                                        <span class="unit" style="right: 2px; font-size: 8px;">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-color);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span class="icon" style="font-size: 14px;">🤖</span>
+                                <h3 style="margin: 0; font-size: 13px; font-weight: 600; color: var(--accent-gold);">ステータス最適分配</h3>
+                            </div>
+                            <div style="flex: 1; display: flex; gap: 6px; align-items: center; background: rgba(255,255,255,0.03); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);">
+                                <span style="font-size: 9px; color: var(--text-muted); font-weight: bold;">対象:</span>
+                                <div style="flex: 1; display: flex; justify-content: space-between; align-items: center;">
+                                    <label style="font-size: 9px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--accent-gold);"><input type="checkbox" id="opt-target-crit" checked style="width: 12px; height: 12px; accent-color: var(--accent-gold);">会心</label>
+                                    <label style="font-size: 9px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--accent-blue);"><input type="checkbox" id="opt-target-fast" checked style="width: 12px; height: 12px; accent-color: var(--accent-blue);">ﾌｧｽﾄ</label>
+                                    <label style="font-size: 9px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--accent-green);"><input type="checkbox" id="opt-target-luck" checked style="width: 12px; height: 12px; accent-color: var(--accent-green);">幸運</label>
+                                    <label style="font-size: 9px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--accent-cyan);"><input type="checkbox" id="opt-target-dex" checked style="width: 12px; height: 12px; accent-color: var(--accent-cyan);">器用</label>
+                                    <label style="font-size: 9px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--accent-purple);"><input type="checkbox" id="opt-target-universal" checked style="width: 12px; height: 12px; accent-color: var(--accent-purple);">万能</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <label style="font-size: 10px; color: var(--text-muted);">現在の合計実数</label>
+                                <input type="text" id="optimizer-current-total" class="bi-input" value="5000" disabled style="opacity: 0.6; text-align: center; width: 100%; box-sizing: border-box;">
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <label style="font-size: 10px; color: var(--accent-cyan);">配分に使う合計実数</label>
+                                <input type="number" id="optimizer-budget" class="bi-input" value="5000" style="text-align: center; color: var(--accent-cyan); font-weight: bold; width: 100%; box-sizing: border-box;">
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <button id="btn-optimize" class="btn" style="flex: 1; background: rgba(0, 210, 255, 0.15); border: 1px solid rgba(0, 210, 255, 0.4); color: var(--accent-cyan); font-weight: 600; font-size: 12px; height: 32px;">✨ 最適配分を実行</button>
+                            <button id="btn-apply-optimal" class="btn btn-secondary" style="flex: 1; font-size: 12px; display: none; height: 32px; background: rgba(0, 255, 128, 0.15); color: #fff; border-color: rgba(0,255,128,0.4);">結果を適用する</button>
+                        </div>
+                        
+                        <div id="optimizer-result" style="display: none; margin-top: 10px; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; font-size: 11px; border: 1px solid rgba(0, 210, 255, 0.2);">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
+                                <span style="font-weight: 600;">推奨構成 (合計: <span id="opt-result-total">0</span>)</span>
+                                <span id="opt-diff-pct" style="color: var(--accent-green); font-weight: 700;">+0.00%</span>
+                            </div>
+                            <div id="opt-recommended-stats" style="color: #ccc; line-height: 1.6; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;">
+                                </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="class-actions-bar" style="margin-top: 12px; display: flex; align-items: flex-end; gap: 8px;">
+                        <div class="header-actions" style="display: flex; gap: 4px; height: 35px; width: 100%;">
+                            <button id="btn-reset" class="btn btn-secondary" style="flex: 1; font-size: 12px; height: 100%;">リセット</button>
+                            <button id="btn-export" class="btn btn-primary" style="flex: 1; font-size: 12px; height: 100%;">保存</button>
+                            <button id="btn-import" class="btn btn-secondary" style="flex: 1; font-size: 12px; height: 100%;">読込</button>
+                            <input type="file" id="import-file" style="display:none;" accept=".json">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid-col flex-col-container">
+                <div class="card glass-card output-card border-accent-blue compact-card">
+                    <div class="card-header" style="margin-bottom: 8px;">
+                        <span class="icon">📈</span>
+                        <h2>シミュレーション出力 (補正前ダメージ1万)</h2>
+                    </div>
+
+                    <div class="speed-toggle-container">
+                        <span class="speed-toggle-title">速度影響をスコアに反映：試験中</span>
+                        <div class="checkbox-group-inline">
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="apply-atk-speed">
+                                <label for="apply-atk-speed">攻撃速度</label>
+                            </div>
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="apply-cast-speed">
+                                <label for="apply-cast-speed">詠唱速度</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="output-block-main compact-main">
+                        <div class="output-label">1000回攻撃期待値スコア</div>
+                        <div class="output-value highlight-blue compact-val" id="out-1000-dps">0</div>
+                    </div>
+
+                    <div class="output-grid-sub compact-sub-grid">
+                        <div class="sub-out-card">
+                            <span class="sub-out-label">通常ヒット</span>
+                            <span class="sub-out-val" id="out-normal">0</span>
+                        </div>
+                        <div class="sub-out-card">
+                            <span class="sub-out-label">会心ヒット</span>
+                            <span class="sub-out-val highlight-gold" id="out-crit">0</span>
+                        </div>
+                        <div class="sub-out-card">
+                            <span class="sub-out-label">幸運ヒット</span>
+                            <span class="sub-out-val highlight-green" id="out-lucky">0</span>
+                        </div>
+                        <div class="sub-out-card">
+                            <span class="sub-out-label">幸運会心ヒット</span>
+                            <span class="sub-out-val highlight-cyan" id="out-lucky-crit">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card glass-card border-accent-purple compact-card" style="height: 100%;">
+                    <div class="card-header" style="margin-bottom: 8px;">
+                        <span class="icon">📊</span>
+                        <h2>ステータス効率</h2>
+                    </div>
+                    
+                    <div class="efficiency-chart" id="efficiency-panel">
+                        </div>
+
+                    <div class="break-even-box" id="break-even-panel" style="margin-top: 10px;">
+                        </div>
+
+                    <div class="analysis-toggles-container" style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08);">
+                        <span class="analysis-toggles-title" style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 500;">分析対象ステータスの選択:</span>
+                        <div class="checkbox-group-inline" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between;">
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="toggle-analysis-crit" checked>
+                                <label for="toggle-analysis-crit" style="font-size: 11px; color: var(--accent-gold);">会心</label>
+                            </div>
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="toggle-analysis-fast" checked>
+                                <label for="toggle-analysis-fast" style="font-size: 11px; color: var(--accent-blue);">ファスト</label>
+                            </div>
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="toggle-analysis-universal" checked>
+                                <label for="toggle-analysis-universal" style="font-size: 11px; color: var(--accent-purple);">万能</label>
+                            </div>
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="toggle-analysis-dex" checked>
+                                <label for="toggle-analysis-dex" style="font-size: 11px; color: var(--accent-cyan);">器用さ</label>
+                            </div>
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="toggle-analysis-luck" checked>
+                                <label for="toggle-analysis-luck" style="font-size: 11px; color: var(--accent-green);">幸運</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <select id="season-select" style="display: none;">
+        <option value="S2" selected>S2</option>
+    </select>
+    
+    <script src="app.js"></script>
+</body>
+</html>

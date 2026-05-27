@@ -1,0 +1,1450 @@
+/* CSS Design System for Star Resonance Calculator */
+
+:root {
+    --bg-primary: #080c14;
+    --bg-secondary: rgba(13, 20, 35, 0.75);
+    --bg-card: rgba(20, 30, 54, 0.6);
+    --bg-input: rgba(10, 15, 28, 0.8);
+    --border-color: rgba(255, 255, 255, 0.07);
+    --border-hover: rgba(255, 255, 255, 0.15);
+    
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --text-dark: #6b7280;
+    
+    /* HSL Tailored Accent Colors */
+    --accent-gold: hsl(45, 100%, 55%);
+    --accent-gold-rgb: 255, 213, 0;
+    
+    --accent-blue: hsl(210, 100%, 55%);
+    --accent-blue-rgb: 59, 130, 246;
+    
+    --accent-green: hsl(150, 80%, 45%);
+    --accent-green-rgb: 16, 185, 129;
+    
+    --accent-purple: hsl(270, 85%, 65%);
+    --accent-purple-rgb: 168, 85, 247;
+    
+    --accent-cyan: hsl(185, 90%, 50%);
+    --accent-cyan-rgb: 6, 182, 212;
+
+    --accent-red: hsl(0, 85%, 60%);
+    
+    --transition-fast: 0.15s ease;
+    --transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --border-radius-sm: 6px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+}
+
+/* Base resets & setups */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background Glowing Elements */
+.glass-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    padding: 16px;
+}
+
+/* App Header styling */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(16px);
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-accent {
+    font-size: 24px;
+    color: var(--accent-gold);
+    text-shadow: 0 0 10px rgba(var(--accent-gold-rgb), 0.5);
+    animation: pulse 3s infinite alternate;
+}
+
+.header-logo h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: monospace;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.control-group label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+/* Form controls & Styled Inputs */
+.styled-select {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    transition: var(--transition-fast);
+}
+
+.styled-select:hover, .styled-select:focus {
+    border-color: var(--border-hover);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: var(--border-radius-sm);
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: var(--accent-blue);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: hsl(210, 100%, 65%);
+    box-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--border-hover);
+}
+
+/* 3-Column layout optimized for WQHD (2560px) */
+.calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+/* 3-Column layout optimized for WQHD (2560px) single-page view */
+.calculator-grid-three-col {
+    display: grid;
+    grid-template-columns: 1.15fr 1.05fr 0.8fr;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.flex-col-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+@media (max-width: 1600px) {
+    .calculator-grid-three-col {
+        grid-template-columns: 1.2fr 1fr;
+    }
+    .calculator-grid-three-col > .grid-col:last-child {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 1000px) {
+    .calculator-grid-three-col {
+        grid-template-columns: 1fr;
+    }
+    .calculator-grid-three-col > .grid-col:last-child {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 900px) {
+    .calculator-grid {
+        grid-template-columns: 1fr;
+    }
+    .app-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+}
+
+/* Card layout */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(16px);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: var(--transition-smooth);
+}
+
+.card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.card-header .icon {
+    font-size: 20px;
+}
+
+.card-header h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.card-description {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+/* Accent Borders */
+.border-accent-gold {
+    border-top: 4px solid var(--accent-gold);
+}
+.border-accent-blue {
+    border-top: 4px solid var(--accent-blue);
+}
+.border-accent-purple {
+    border-top: 4px solid var(--accent-purple);
+}
+
+/* Bidirectional Stat row layout */
+.bidirectional-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.stat-row {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    padding: 12px 16px;
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-smooth);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-row:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.stat-label-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.stat-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.stat-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Stat color themes */
+[data-stat="dream-strength"] .stat-title { color: var(--text-main); }
+[data-stat="crit"] .stat-title { color: var(--accent-gold); }
+[data-stat="fast"] .stat-title { color: var(--accent-blue); }
+[data-stat="luck"] .stat-title { color: var(--accent-green); }
+[data-stat="universal"] .stat-title { color: var(--accent-purple); }
+[data-stat="dex"] .stat-title { color: var(--accent-cyan); }
+
+.stat-inputs {
+    display: grid;
+    /* 6-digit widths: ~95px to 105px each */
+    grid-template-columns: 100px 105px 90px;
+    gap: 8px;
+}
+
+.stat-inputs-single {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.bi-input, .bi-input-single {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 10px 38px 10px 10px;
+    border-radius: var(--border-radius-sm);
+    font-size: 13.5px;
+    font-weight: 500;
+    outline: none;
+    font-family: monospace;
+    transition: var(--transition-fast);
+    box-sizing: border-box;
+}
+
+/* Specific glows */
+[data-stat="dream-strength"] .bi-input-single:focus { border-color: var(--text-main); box-shadow: 0 0 8px rgba(255, 255, 255, 0.2); }
+[data-stat="crit"] .bi-input:focus { border-color: var(--accent-gold); box-shadow: 0 0 8px rgba(var(--accent-gold-rgb), 0.25); }
+[data-stat="fast"] .bi-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 8px rgba(var(--accent-blue-rgb), 0.25); }
+[data-stat="luck"] .bi-input:focus { border-color: var(--accent-green); box-shadow: 0 0 8px rgba(var(--accent-green-rgb), 0.25); }
+[data-stat="universal"] .bi-input:focus { border-color: var(--accent-purple); box-shadow: 0 0 8px rgba(var(--accent-purple-rgb), 0.25); }
+[data-stat="dex"] .bi-input:focus { border-color: var(--accent-cyan); box-shadow: 0 0 8px rgba(var(--accent-cyan-rgb), 0.25); }
+
+.input-wrapper .unit {
+    position: absolute;
+    right: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    pointer-events: none;
+    font-weight: 500;
+}
+
+/* Stat addons (Dex, Universal bonuses display) */
+.stat-addon {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.addon-label {
+    color: var(--text-muted);
+}
+
+.addon-val {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.stat-addon.inline {
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.addon-input {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 4px 6px;
+    border-radius: var(--border-radius-sm);
+    width: 60px;
+    font-size: 12px;
+    outline: none;
+    font-family: monospace;
+}
+
+.addon-select {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 3px 6px;
+    border-radius: var(--border-radius-sm);
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Form structures */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.span-2 {
+    grid-column: span 2;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.important-label {
+    color: var(--text-main) !important;
+    font-weight: 600 !important;
+}
+
+.input-desc {
+    font-size: 10px;
+    color: var(--text-dark);
+    margin-top: -3px;
+}
+
+.styled-input {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 10px 12px;
+    border-radius: var(--border-radius-sm);
+    outline: none;
+    font-size: 13px;
+    transition: var(--transition-fast);
+    font-family: monospace;
+}
+
+.styled-input:focus {
+    border-color: var(--border-hover);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+}
+
+.hidden-input {
+    display: none;
+}
+
+.border-top {
+    border-top: 1px solid var(--border-color);
+    padding-top: 14px;
+    margin-top: 4px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.input-inline {
+    display: flex;
+    gap: 8px;
+}
+
+.input-inline .styled-input {
+    flex: 1;
+}
+
+/* Custom Checkbox */
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-blue);
+    cursor: pointer;
+}
+
+.checkbox-wrapper label {
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* Horizontal display readouts */
+.horizontal-val-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 12px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.horizontal-val-display span {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.horizontal-val-display strong {
+    font-size: 18px;
+    color: var(--text-main);
+    font-family: monospace;
+}
+
+/* Readonly fields display style */
+.display-only .val-readout {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px dashed var(--border-color);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-sm);
+    color: var(--text-main);
+    font-family: monospace;
+    font-weight: 600;
+}
+
+/* Main output block styling */
+.output-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.output-block-main {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-md);
+    padding: 20px;
+    text-align: center;
+}
+
+.output-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.output-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.output-subtext {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+/* Color codes */
+.highlight-blue {
+    color: var(--accent-blue);
+    text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.3);
+}
+
+.highlight-gold {
+    color: var(--accent-gold);
+    text-shadow: 0 0 15px rgba(var(--accent-gold-rgb), 0.3);
+}
+
+.highlight-green {
+    color: var(--accent-green);
+    text-shadow: 0 0 15px rgba(var(--accent-green-rgb), 0.3);
+}
+
+.highlight-cyan {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 15px rgba(var(--accent-cyan-rgb), 0.3);
+}
+
+.output-grid-sub {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.sub-out-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sub-out-label {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.sub-out-val {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+.highlight-bg {
+    background: rgba(var(--accent-blue-rgb), 0.08) !important;
+    border-color: rgba(var(--accent-blue-rgb), 0.25) !important;
+    grid-column: span 2;
+    text-align: center;
+    padding: 16px;
+}
+
+.highlight-bg .sub-out-label {
+    font-size: 11px;
+    color: var(--text-main);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.highlight-bg .sub-out-val {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Lucky Hit details */
+.lucky-hit-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lucky-hit-details h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.details-row span {
+    color: var(--text-muted);
+}
+
+.details-row.display-val {
+    background: rgba(0, 0, 0, 0.15);
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px dashed var(--border-color);
+}
+
+.details-row.display-val strong {
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--accent-green);
+}
+
+.inline-num {
+    width: 60px;
+    padding: 2px 4px;
+}
+
+/* Stat Optimization bars panel */
+.efficiency-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+    /* Hide scrollbar universally for clean dashboard look */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.efficiency-chart::-webkit-scrollbar {
+    display: none;
+}
+
+.efficiency-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.eff-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.eff-name {
+    font-weight: 500;
+}
+
+.eff-pct {
+    font-family: monospace;
+    font-weight: 600;
+    color: var(--accent-purple);
+}
+
+.eff-bar-wrapper {
+    background: rgba(255, 255, 255, 0.05);
+    height: 8px;
+    border-radius: 4px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.eff-bar {
+    background: linear-gradient(90deg, rgba(var(--accent-purple-rgb), 0.6), var(--accent-purple));
+    height: 100%;
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(var(--accent-purple-rgb), 0.3);
+}
+
+.efficiency-footer {
+    margin-top: 14px;
+}
+
+.tips-box {
+    background: rgba(168, 85, 247, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.15);
+    border-radius: var(--border-radius-sm);
+    padding: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.tips-box strong {
+    color: var(--text-main);
+}
+
+/* Animation utilities */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 8px rgba(var(--accent-gold-rgb), 0.4);
+    }
+    100% {
+        transform: scale(1.05);
+        text-shadow: 0 0 16px rgba(var(--accent-gold-rgb), 0.8);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Fast Speed Conversion sub-rows styling */
+.stat-addon-speed-group {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.speed-sub-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.speed-sub-label {
+    min-width: 60px;
+    font-weight: 500;
+}
+
+.speed-converted-val {
+    font-family: monospace;
+    color: var(--text-main);
+    min-width: 55px;
+    text-align: right;
+}
+
+.plus-icon, .equal-icon {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.speed-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.speed-input {
+    width: 90px;
+    padding-right: 52px !important;
+    text-align: right;
+    font-family: monospace;
+}
+
+.speed-unit {
+    position: absolute;
+    right: 8px;
+    font-size: 9px;
+    color: var(--text-dark);
+    pointer-events: none;
+    font-weight: 500;
+}
+
+.speed-total-val {
+    font-family: monospace;
+    font-weight: 700;
+    color: var(--accent-blue);
+    font-size: 14px;
+    min-width: 60px;
+    text-align: right;
+    text-shadow: 0 0 8px rgba(var(--accent-blue-rgb), 0.2);
+}
+
+/* Simulation Speed factor checkboxes */
+.speed-toggle-container {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color);
+    padding: 14px;
+    border-radius: var(--border-radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.speed-toggle-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.checkbox-group-inline {
+    display: flex;
+    gap: 20px;
+}
+
+/* Helper inline layout attributes */
+.addon-label-highlight {
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.wide-input {
+    width: 95px !important;
+}
+
+/* Compact layout utilities for WQHD single-viewport fitting */
+.compact-card {
+    padding: 16px !important;
+    margin-bottom: 0px !important;
+}
+
+.compact-main {
+    padding: 10px !important;
+}
+
+.compact-val {
+    font-size: 30px !important;
+}
+
+.compact-sub-grid {
+    gap: 6px !important;
+}
+
+.compact-sub-grid .sub-out-card {
+    padding: 6px 10px !important;
+}
+
+.compact-sub-grid .sub-out-val {
+    font-size: 14px !important;
+}
+
+.form-group-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.form-sub-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-sub-group label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.compact-input {
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+}
+
+/* Minimize body margins/paddings for WQHD */
+@media (min-width: 1800px) {
+    .container {
+        padding: 16px !important;
+        max-width: 100% !important;
+    }
+    .app-header {
+        margin-bottom: 12px !important;
+        padding-bottom: 10px !important;
+    }
+}
+
+/* Compact layout for Column 1 Character Stats */
+.compact-group {
+    gap: 8px !important;
+}
+
+.compact-row {
+    padding: 10px 12px !important;
+    border-radius: var(--border-radius-sm) !important;
+}
+
+.stat-top-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.stat-top-line .stat-label-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0px !important;
+    gap: 2px;
+}
+
+.stat-top-line .stat-title {
+    font-size: 13px !important;
+}
+
+.stat-top-line .stat-subtitle {
+    font-size: 10px !important;
+}
+
+.stat-inputs-inline {
+    display: flex;
+    gap: 8px;
+}
+
+.compact-wrap {
+    width: 80px !important;
+}
+
+.compact-bi {
+    padding: 5px 22px 5px 8px !important;
+    font-size: 12px !important;
+}
+
+.compact-wrap .unit {
+    right: 6px !important;
+    font-size: 9px !important;
+}
+
+/* Compact addons styling */
+.inline-addon {
+    margin-top: 6px !important;
+    padding-top: 4px !important;
+    border-top: 1px dashed var(--border-color) !important;
+    display: flex;
+    align-items: center;
+    gap: 6px !important;
+    font-size: 11px !important;
+}
+
+.select-addon {
+    justify-content: flex-start !important;
+}
+
+.compact-add-input {
+    padding: 2px 4px !important;
+    font-size: 11px !important;
+    width: 48px !important;
+}
+
+.compact-select {
+    padding: 2px 4px !important;
+    font-size: 11px !important;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: var(--border-radius-sm);
+    outline: none;
+}
+
+/* Speed sub group styling in character stats */
+.compact-speed-group {
+    margin-top: 6px !important;
+    padding-top: 4px !important;
+    border-top: 1px dashed var(--border-color) !important;
+    display: flex;
+    flex-direction: column;
+    gap: 4px !important;
+}
+
+.compact-speed-row {
+    display: flex;
+    align-items: center;
+    font-size: 11px !important;
+    gap: 4px !important;
+    width: 100%;
+}
+
+.compact-speed-row .speed-sub-label {
+    width: 52px;
+    color: var(--text-muted);
+}
+
+.compact-speed-row .speed-converted-val {
+    width: 40px;
+    text-align: right;
+    font-weight: 500;
+}
+
+.compact-speed-row .plus-icon,
+.compact-speed-row .equal-icon {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.compact-speed-row .speed-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.compact-speed-input {
+    width: 42px !important;
+    padding: 2px 4px !important;
+    font-size: 11px !important;
+}
+
+.compact-speed-row .speed-unit {
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+.compact-speed-row .speed-total-val {
+    font-weight: 600;
+    color: var(--accent-blue);
+    width: 48px;
+    text-align: right;
+}
+
+/* Break-even advice box styles */
+.break-even-tip {
+    background: rgba(168, 85, 247, 0.08) !important;
+    border: 1px solid rgba(168, 85, 247, 0.25) !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    border-radius: var(--border-radius-sm) !important;
+    color: var(--text-main) !important;
+}
+
+.break-even-tip strong {
+    color: var(--accent-purple) !important;
+}
+
+.compact-grid-gap {
+    gap: 8px !important;
+}
+
+.compact-header {
+    margin-bottom: 8px !important;
+}
+
+.multiplier-aligned-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.mult-align-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    min-height: 40px;
+}
+
+.mult-align-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.mult-align-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.speed-formula-aligned {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.speed-formula-part {
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--text-main);
+    width: 44px;
+    text-align: right;
+}
+
+.speed-formula-plus, .speed-formula-equal {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: monospace;
+}
+
+.speed-formula-total {
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-blue);
+    width: 48px;
+    text-align: right;
+}
+
+.stat-row {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.stat-row.hp-boosted {
+    border: 1px solid rgba(168, 85, 247, 0.4) !important;
+    background: rgba(168, 85, 247, 0.08) !important;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.15) !important;
+}
+
+.stat-row.hp-boosted::after {
+    content: "HP変動 +10.0% 適用中";
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    font-size: 9px;
+    color: var(--accent-purple);
+    font-weight: 700;
+    background: rgba(168, 85, 247, 0.15);
+    padding: 1px 4px;
+    border-radius: 3px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+/* Vertical view height locking on desktop screens */
+@media (min-width: 1001px) {
+    html, body {
+        height: 100vh;
+        overflow: hidden;
+    }
+    
+    .container {
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .calculator-grid-three-col {
+        flex: 1;
+        height: 100%;
+        min-height: 0;
+    }
+    
+    .grid-col {
+        height: 100%;
+        min-height: 0;
+    }
+    
+    .grid-col > .card {
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+    
+    /* Scroll inside containers if height gets too small */
+    .grid-col > .card > .form-grid {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+        padding-right: 4px;
+    }
+    
+    .flex-col-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        height: 100%;
+        min-height: 0;
+    }
+    
+    .flex-col-container > .card {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .flex-col-container > .card > .output-grid-sub {
+        flex: 1;
+        overflow-y: hidden !important;
+        min-height: 0;
+    }
+    
+    .efficiency-chart {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+    }
+
+    /* ==========================================================================
+       COLUMN 1: RAW ATTACK POWER & TEAM BUFF SETTINGS
+       ========================================================================== */
+    .calculator-grid-three-col > :nth-child(1) .card {
+        gap: 12px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(1) .form-grid.compact-grid-gap {
+        row-gap: 12px !important;
+        column-gap: 16px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(1) .card-header {
+        margin-bottom: 8px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(1) h2 {
+        font-size: 16px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(1) label {
+        font-size: 13.5px !important;
+        font-weight: 600 !important;
+        color: var(--text-main) !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(1) .important-label {
+        font-size: 14.5px !important;
+        font-weight: 700 !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(1) .styled-input {
+        font-size: 15px !important;
+        padding: 8px 12px !important;
+        height: 36px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(1) .checkbox-wrapper label {
+        font-size: 13.5px !important;
+    }
+
+    /* ==========================================================================
+       COLUMN 2: PACKED CHARACTER STATS & DETAILED MULTIPLIERS LIST
+       ========================================================================== */
+    .calculator-grid-three-col > :nth-child(2) .card {
+        gap: 6px !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+
+    .calculator-grid-three-col > :nth-child(2) .bidirectional-group {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 5px !important;
+        overflow-y: hidden !important;
+        padding-right: 0 !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .stat-row {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 6px 12px !important;
+        margin-bottom: 0 !important;
+        border-radius: 6px !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .stat-label-col {
+        margin-bottom: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .stat-title {
+        font-size: 14.5px !important;
+        font-weight: 700 !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .stat-subtitle {
+        font-size: 10px !important;
+        font-weight: 500 !important;
+        color: var(--text-muted) !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .bi-input {
+        font-size: 13.5px !important;
+        padding: 5px 36px 5px 10px !important;
+        height: 28px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .input-wrapper .unit {
+        font-size: 10.5px !important;
+        right: 10px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .stat-addon {
+        display: none !important; /* Hide old addon text block to save height */
+    }
+
+    /* Detailed Multipliers list rules inside Column 2 */
+    .calculator-grid-three-col > :nth-child(2) .multiplier-aligned-list {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 3px !important;
+        margin-top: 4px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .mult-align-row {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 3px 8px !important;
+        min-height: 28px !important;
+        background: rgba(255, 255, 255, 0.01) !important;
+        border-radius: 4px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .mult-align-label {
+        font-size: 12.5px !important;
+        font-weight: 600 !important;
+        color: var(--text-main) !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .compact-bi {
+        font-size: 12.5px !important;
+        padding: 2px 20px 2px 8px !important;
+        height: 22px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .compact-add-input {
+        font-size: 12.5px !important;
+        padding: 2px 4px !important;
+        height: 22px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .compact-select {
+        font-size: 11.5px !important;
+        padding: 1px 4px !important;
+        height: 24px !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .speed-formula-aligned {
+        font-size: 12.5px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    .calculator-grid-three-col > :nth-child(2) .speed-formula-aligned span {
+        font-size: 12px !important;
+    }
+
+    .calculator-grid-three-col > :nth-child(2) .class-actions-bar {
+        margin-top: 6px !important;
+        padding-top: 6px !important;
+        gap: 6px !important;
+    }
+}
